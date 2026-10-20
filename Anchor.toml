@@ -7,7 +7,10 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-pre_req_vault = "DBoobRVqT7PaAhq8obqo95723CHyWvcCLRUKvQ5wYWE4"
+pre_req_vault = "CSnNzT5768yVdNbaKH2teECCuvEVovUGaxWZtr48Z8Y1"
+
+[programs.devnet]
+pre_req_vault = "CSnNzT5768yVdNbaKH2teECCuvEVovUGaxWZtr48Z8Y1"
 
 [provider]
 cluster = "devnet"

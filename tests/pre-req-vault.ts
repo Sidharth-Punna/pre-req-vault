@@ -131,6 +131,22 @@ describe("pre-req-vault", () => {
 
     expect(finalBalanceVault).to.equal(initialVaultBalance - withdrawAmount);
     expect(finalBalanceUser).to.be.greaterThan(intialUserBalance);
+
+    // The CPI should have created the registration account owned by the registration program
+    const applicationAccountInfo = await provider.connection.getAccountInfo(
+      applicationAccount,
+    );
+    expect(applicationAccountInfo).to.not.be.null;
+    expect(applicationAccountInfo.owner.toBase58()).to.equal(
+      applicationProgram.toBase58(),
+    );
+
+    // ApplicationAccount layout: discriminator(8) + user(32) + bump(1) + pre_req_ts(1) + pre_req_rs(1) + github(4 + len)
+    const githubLen = applicationAccountInfo.data.readUInt32LE(43);
+    const github = applicationAccountInfo.data
+      .subarray(47, 47 + githubLen)
+      .toString();
+    console.log(`Registered GitHub username: ${github}`);
   });
 
   it(" Close the vault and withdraw all the funds", async () => {
